@@ -399,33 +399,31 @@ private: System::Void equal_Click(System::Object^ sender, System::EventArgs^ e) 
 	double result = 1; // initial vale of result as x^0 = 1
 
 
-	if (secondDigit > 0) { // checks if exponent is positive and greater than 0
+	if (abs(secondDigit) > 0) { // checks if exponent is positive and greater than 0
 
 		// uses for loop as specified in the question
-		for (int i = 0; i < secondDigit; i++) {
+		for (int i = 0; i < abs(secondDigit); i++) {
 			result = result * firstDigit; // does base * base for n times
 
 		}// Displays the equation and answer
-		Display->Text = System::Convert::ToString(firstDigit) + "^" + System::Convert::ToString(secondDigit) + "\r\n" 
-			+ "Ans = " + System::Convert::ToString(result);
-	}
-	else if (secondDigit == 0) { // checks if exponent is 0
-		Display->Text = System::Convert::ToString(firstDigit) + "^" + System::Convert::ToString(secondDigit) + "\r\n"
-			+ "Ans = " + System::Convert::ToString(result);
-	}
+		if (secondDigit < 0) {
 
-	// calculates power when exponent is negative. not required for the task.
-	else {
-		for (int i = 0; i < (secondDigit * -1); i++) {
-			result = result * firstDigit;
+			result = (1 / result); // divides result by 1 because x^-n is the same as 1/(x^n)
+
+			// rounds to 4 decimal points
+			double value = (int)(result * 10000 + .5);
+			result = (double)value / 10000;
+
+			Display->Text = System::Convert::ToString(firstDigit) + "^" + System::Convert::ToString(secondDigit) + "\r\n"
+				+ "Ans = " + System::Convert::ToString(result);
+		}
+		else {
+			Display->Text = System::Convert::ToString(firstDigit) + "^" + System::Convert::ToString(secondDigit) + "\r\n"
+				+ "Ans = " + System::Convert::ToString(result);
 		}
 		
-		result = (1 / result); // divides result by 1 because x^-n is the same as 1/(x^n)
-
-		// rounds to 4 decimal points
-		double value = (int)(result * 10000 + .5);
-		result = (double)value / 10000;
-		
+	}
+	else { 
 		Display->Text = System::Convert::ToString(firstDigit) + "^" + System::Convert::ToString(secondDigit) + "\r\n"
 			+ "Ans = " + System::Convert::ToString(result);
 	}
